@@ -3,6 +3,7 @@
 /css/bootstrap.min.css
 /js/jquery.min.js
 /js/jquery.cookie.js
+/js/moment.min.js
 /js/bootstrap.bundle.min.js
 composer.json
 composer.lock
