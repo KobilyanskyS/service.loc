@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $("#sendBtn").click(
         function () {
-            $("#sendBtn").html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span><span role="status">Вход...</span>`);
+            $("#sendBtn").html(`<span class="spinner-border spinner-border-sm"></span><span role="status">Вход...</span>`);
             $("#sendBtn").attr('disabled');
             var loginValue = $('#exampleInputEmail1').val();
             var passwordValue = $('#exampleInputPassword1').val();

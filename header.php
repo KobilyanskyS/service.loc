@@ -21,6 +21,12 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Все записи</a>
         </li>
+        <?php if ($_COOKIE["role"] == "admin") {?>
+        <li class="nav-item">
+          <a class="nav-link" href="admin_panel.php">Админ-панель</a>
+        </li>
+        <?php }?>
+        
         <li class="nav-item d-block d-md-block d-lg-none">
           <a class="text-danger nav-link" href="#">Выйти</a>
         </li>
