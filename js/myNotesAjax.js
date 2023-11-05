@@ -18,6 +18,7 @@ $(document).ready(function () {
                         dataResult.forEach(function (element) {
                             const dateObj = new Date(element.date);
                             const MachineName = element.name;
+                            const MachineStatus = element.is_active;
     
                             // Получение даты в формате "29 ноября"
                             const options = { day: "numeric", month: "long" };
@@ -28,10 +29,13 @@ $(document).ready(function () {
 
                             let card = ` <div class="col-sm-6 mb-3">
                                             <div class="card">
-                                                <h5 class="card-header">${MachineName}</h5>
+                                                <div class="card-header">
+                                                    <h5>${MachineName}</h5>
+                                                </div>
                                                 <div class="card-body">
                                                     <p class="card-text">Дата: ${date}</p>
                                                     <p class="card-text">Время: ${time}</p>
+                                                    ${MachineStatus == '0' ? '<p class="card-text text-danger">Машинка не работает. Вы можете перенести запись на другую машинку</p>' : ""}
                                                 </div>
                                             </div>
                                         </div>`;

@@ -13,13 +13,14 @@
     <div class="container">
         <?php include 'header.php'; ?>
 
-        <select class="form-select mb-4 select" aria-label="Default select example"
-            aria-placeholder="Выберите машинку">
-            <option value="1">Машинка 1</option>
-            <option value="2">Машинка 2</option>
-            <option value="3">Машинка 3</option>
-            <option value="4">Машинка 4</option>
-        </select>
+        <div class="row">
+            <div class="col-xl-2 col-xxl-2">
+                <label for="machinesSelect">Выберите машинку</label>
+                <select class="form-select mb-4 select" id="machinesSelect">
+
+                </select>
+            </div>
+        </div>
         <!-- Таблица, в которую мы загружаем данные -->
         <div class="overflow-y-scroll">
             <table class="table table-bordered tb"></table>
