@@ -28,14 +28,14 @@ function getStatusClass(isActive) {
 
 
 let updateStatusData = new Map();
-function change_status(e){
-    if (e.innerHTML == "Работает"){
+function change_status(e) {
+    if (e.innerHTML == "Работает") {
         e.innerHTML = "Не работает";
         e.classList.remove("btn-outline-success");
         e.classList.add("btn-outline-danger");
         e.value = '0';
         updateStatusData.set(e.id, e.value);
-    } else if (e.innerHTML == "Не работает"){
+    } else if (e.innerHTML == "Не работает") {
         e.innerHTML = "Работает";
         e.classList.remove("btn-outline-danger");
         e.classList.add("btn-outline-success");
@@ -44,18 +44,11 @@ function change_status(e){
     }
 }
 
-
-function updateUsersTable() {
-    if (usersData === null) {
-        return; // Ничего не делать, если данные еще не загружены
-    }
-    
-    const usersTable = document.getElementById('users_table'); 
-
+function template(data) {
     let Result = '';
 
     // Создать строки HTML и вставить их в таблицу
-    usersData.forEach(item => {
+    data.forEach(item => {
         Result += `
         <tr>
             <td>${item.id}</td>
@@ -64,9 +57,36 @@ function updateUsersTable() {
         </tr>`;
     });
 
-    usersTable.innerHTML = Result;
+    return Result;
+}
 
+function updateUsersTable() {
+    if (usersData === null) {
+        return; // Ничего не делать, если данные еще не загружены
+    }
 
+    $('.pagination_container').pagination({
+        dataSource: usersData,
+        callback: function (data, pagination) {
+            var html = template(data);
+            $('#users_table').html(html);
+            // Находим ul и добавляем класс "pagination" и "justify-content-center"
+            const ulElement = document.querySelector('.pagination_container .paginationjs-pages ul');
+            ulElement.classList.add('pagination', 'justify-content-center');
+
+            // Находим все li элементы и добавляем класс "page-item"
+            const liElements = document.querySelectorAll('.pagination_container .paginationjs-pages li');
+            liElements.forEach((li) => {
+                li.classList.add('page-item');
+            });
+
+            // Находим все a элементы внутри li элементов и добавляем класс "page-link"
+            const aElements = document.querySelectorAll('.pagination_container .paginationjs-pages li a');
+            aElements.forEach((a) => {
+                a.classList.add('page-link');
+            });
+        }
+    })
 }
 
 function updateMachinesTable() {
@@ -80,7 +100,7 @@ function updateMachinesTable() {
 
     // Создать строки HTML и вставить их в таблицу
     machinesData.forEach(item => {
-        
+
         updateStatusData.set(item.id.toString(), item.is_active.toString());
 
         Result += `
@@ -168,7 +188,7 @@ $(document).ready(function () {
     );
 
     $("#machinesBtn").click(
-        function(){
+        function () {
             const jsonArray = Array.from(updateStatusData, ([id, is_active]) => ({ id, is_active }));
             document.querySelector("#machinesBtn").setAttribute("disabled", "disabled");
             $("#machinesBtn").html('<span class="spinner-border spinner-border-sm" aria-hidden="true"></span><span role="status"> Сохранение...</span>');
@@ -178,8 +198,8 @@ $(document).ready(function () {
                 type: "POST",
                 data: JSON.stringify(jsonArray),
                 contentType: "application/json; charset=utf-8"
-            }).done(function(dataResult){
-                if(dataResult == "ok"){
+            }).done(function (dataResult) {
+                if (dataResult == "ok") {
                     $('#alertSuccessMach').show();
                     document.querySelector("#machinesBtn").removeAttribute("disabled");
                     $("#machinesBtn").html("Сохранить");
@@ -195,11 +215,6 @@ $(document).ready(function () {
                     }, 2000);
                 }
             })
-
-
-
         }
     );
-
-
 })

@@ -1,3 +1,6 @@
+<?php 
+    if (isset($_COOKIE["username"])) {
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,11 +21,12 @@
         </div>
     </div>
 
-</body>
 
-</html>
 
 <script src="js/bootstrap.bundle.js"></script>
 <script src="js/jquery.min.js"></script>
-<script src="js/myNotesAjax.js">
-</script>
+<script src="js/myNotesAjax.js"></script>
+</body>
+
+</html>
+<?php } else { header('Location: login.php'); }?>

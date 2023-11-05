@@ -1,3 +1,6 @@
+<?php 
+if (isset($_COOKIE["username"])) {
+?>
 <!doctype html>
 <html>
 
@@ -59,3 +62,6 @@
 </body>
 
 </html>
+<?php 
+} else { header('Location: login.php'); }
+?>

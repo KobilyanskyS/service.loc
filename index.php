@@ -1,5 +1,5 @@
 <?php
-if (isset($_COOKIE["role"])) {
+if (isset($_COOKIE["username"])) {
     ?>
     <!DOCTYPE html>
     <html lang="en">
