@@ -1,12 +1,19 @@
-var jsonData = null;
+var notesJsonData = null;
+var machinesJsonData = null;
 
 $(document).ready(function () {
     $(window).on("load", function () {
-        var server = "get_notes_handler.php";
+        var notes_server = "get_notes_handler.php";
+        var machines_server = "get_active_machines_handler.php";
+
+        $.getJSON(machines_server).done(function (data) {
+            machinesJsonData = data; // Сохранить данные в глобальной переменной
+            updateSelect(); // Обновить таблицу при загрузке страницы
+        });
 
         // Загрузить JSON данные при загрузке страницы
-        $.getJSON(server).done(function (data) {
-            jsonData = data; // Сохранить данные в глобальной переменной
+        $.getJSON(notes_server).done(function (data) {
+            notesJsonData = data; // Сохранить данные в глобальной переменной
             updateTable(); // Обновить таблицу при загрузке страницы
         });
 
@@ -15,14 +22,31 @@ $(document).ready(function () {
             updateTable();
         });
 
+        function updateSelect(){
+            if (machinesJsonData === null) {
+                return; // Ничего не делать, если данные еще не загружены
+            }
+
+            const select = document.querySelector('.select'); 
+
+            let Result = '';
+        
+            // Создать строки HTML и вставить их в таблицу
+            machinesJsonData.forEach(item => {
+                Result += `<option value="${item.id}">${item.name}</option>`;
+            });
+        
+            select.innerHTML = Result;
+        }
+
         function updateTable() {
-            if (jsonData === null) {
+            if (notesJsonData === null) {
                 return; // Ничего не делать, если данные еще не загружены
             }
 
             var selectedMachine = parseInt($('.select').val());
 
-            const filteredData = jsonData.filter(item => selectedMachine === 0 || item.machine_id === selectedMachine);
+            const filteredData = notesJsonData.filter(item => selectedMachine === 0 || item.machine_id === selectedMachine);
 
             const dates = filteredData.map(item => {
                 const date = moment(item.date);
@@ -68,6 +92,7 @@ $(document).ready(function () {
 
             document.querySelector('.tb').innerHTML = `${theadHTML}${tbodyHTML}`;
         }
+        updateSelect();
         updateTable();
     });
 });
